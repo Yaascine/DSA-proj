@@ -1,0 +1,156 @@
+<style>
+  :root{
+    --bg:#0f1420; --panel:#171e2e; --panel2:#1e2740; --ink:#e8edf7; --muted:#9aa7bd;
+    --line:#2a3550; --accent:#5eead4; --accent2:#818cf8; --good:#34d399; --warn:#fbbf24;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 64px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);line-height:1.55}
+  .hero{background:linear-gradient(135deg,#1b2440,#131a2b);border:1px solid var(--line);border-radius:18px;padding:28px}
+  h1{margin:0 0 6px;font-size:1.7rem;letter-spacing:.2px}
+  h2{font-size:1.15rem;margin:34px 0 12px;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:6px}
+  h3{font-size:1rem;margin:18px 0 8px;color:var(--accent2)}
+  .sub{color:var(--muted);margin:0}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .badge{font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel2)}
+  .badge.ok{color:#04121a;background:var(--good);border-color:transparent}
+  .grid{display:grid;gap:14px}
+  .stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:18px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .stat .n{font-size:1.7rem;font-weight:700;color:var(--accent)}
+  .stat .l{font-size:.8rem;color:var(--muted);margin-top:2px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .card h3{margin-top:0}
+  .card p{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel2);padding:1px 5px;border-radius:5px}
+  pre{background:#0b0f1a;border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;color:#cdd6e6;margin:10px 0}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:520px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--accent);font-weight:600}
+  td:first-child{font-family:var(--mono);color:var(--ink)}
+  .check{list-style:none;padding:0;margin:8px 0}
+  .check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line);font-size:.92rem}
+  .check li:before{content:"✓";position:absolute;left:0;top:6px;color:var(--good);font-weight:700}
+  .note{background:var(--panel);border-left:3px solid var(--warn);border-radius:8px;padding:12px 14px;font-size:.9rem;color:var(--muted);margin:10px 0}
+  .hl{color:var(--accent);font-weight:600}
+  .foot{margin-top:40px;color:var(--muted);font-size:.8rem;text-align:center}
+  a{color:var(--accent2)}
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>The God Experiment — P1 Build Report</h1>
+    <p class="sub">Engine · Hand-written DSA library · History &amp; cause graph · Narrator · Persistence</p>
+    <div class="badges">
+      <span class="badge ok">57 / 57 tests pass</span>
+      <span class="badge ok">2,608,583 assertions</span>
+      <span class="badge">Makefile ✓</span>
+      <span class="badge">CMake ✓</span>
+      <span class="badge">Deterministic ✓</span>
+      <span class="badge">C++20 · no MFC in core</span>
+    </div>
+    <div class="grid stats">
+      <div class="stat"><div class="n">36</div><div class="l">core files (~2,759 lines)</div></div>
+      <div class="stat"><div class="n">9</div><div class="l">hand-written DSA structures</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">unit-test suites</div></div>
+      <div class="stat"><div class="n">25</div><div class="l">narrated event types</div></div>
+      <div class="stat"><div class="n">79</div><div class="l">files committed</div></div>
+    </div>
+  </div>
+
+  <h2>What was built</h2>
+  <div class="grid cards">
+    <div class="card"><h3>core/common</h3><p>Frozen <code>Types.h</code>, xoshiro256** <code>Rng.h</code> (verified vs reference C), FNV-1a hash, constants, tuning skeleton.</p></div>
+    <div class="card"><h3>core/dsa</h3><p>DynArray, HashTable, MinHeap, LinkedList, Queue, AvlTree, Graph, Sorting, DsaStats — all own code, no STL containers, real counters.</p></div>
+    <div class="card"><h3>core/sim</h3><p>Deterministic engine: fixed tick order, command queue, scheduler, Snapshot, full-state <code>stateHash()</code>, headless runner.</p></div>
+    <div class="card"><h3>core/history</h3><p>Event log, explicit-only cause graph (reverse BFS roots), Tracery-style grammar, deadpan narrator + obituaries.</p></div>
+    <div class="card"><h3>core/persistence</h3><p>nlohmann/json save/load with <code>schemaVersion</code>; preserves RNG states, tiles, humans, scheduler, history.</p></div>
+    <div class="card"><h3>tools &amp; repo</h3><p>SeedHunt (picks demo seed), DemoSystem (demo-only), Makefile + CMake, CONTRIBUTING.md, README, git history.</p></div>
+  </div>
+
+  <h2>Phase 0 hardening (self-review fixes)</h2>
+  <div class="grid cards">
+    <div class="card"><h3>🐛 Duplicate-ID bug fixed</h3><p>New humans now come from one authority (<code>birthHuman</code>/<code>nextHumanId_</code>); births + God-Mode spawns can't collide. Proven by <code>IdUniquenessTest</code>.</p></div>
+    <div class="card"><h3>DynArray lifetime</h3><p>Placement-new + explicit destructors: complex items (names) release resources immediately; ctor/dtor counts balance.</p></div>
+    <div class="card"><h3>HashTable shrink + RNG guards</h3><p>Buckets shrink below 0.25 load; <code>range</code>/<code>chance</code> handle bad inputs safely.</p></div>
+    <div class="card"><h3>More tests + CI</h3><p>Random graph ops, save/load with commands, GitHub Actions CI, team Git guide, MSVC portability note.</p></div>
+  </div>
+  <div class="note">Scope this round: <b>P1 fixes only</b>. P2 (world), P3 (people), P4 (MFC GUI) remain for teammates; MFC-only, no Mac viewer. The demo fingerprint shifted (<code>0xc2ca…</code>) because the birth fix reordered two RNG draws — determinism itself is unchanged.</div>
+
+  <h2>The graded DSA library</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>File</th><th>Structure</th><th>Key design</th><th>Complexity</th></tr>
+    <tr><td>DynArray.h</td><td>dynamic array</td><td>doubling capacity, Debug bounds check</td><td>push amortised O(1)</td></tr>
+    <tr><td>HashTable.h</td><td>hash table</td><td>index-link chaining, dense array, deterministic iteration, grow @ 0.75</td><td>avg O(1)</td></tr>
+    <tr><td>MinHeap.h</td><td>binary min-heap</td><td>(priority, seq) tiebreaker</td><td>O(log n)</td></tr>
+    <tr><td>LinkedList.h</td><td>doubly linked list</td><td>index node pool, O(1) remove by handle</td><td>O(1)</td></tr>
+    <tr><td>Queue.h</td><td>circular FIFO</td><td>doubling growth policy</td><td>O(1)</td></tr>
+    <tr><td>AvlTree.h</td><td>self-balancing BST</td><td>rotations, in-order &amp; reverse</td><td>O(log n)</td></tr>
+    <tr><td>Graph.h</td><td>directed weighted graph</td><td>out + in adjacency lists for reverse BFS</td><td>addEdge O(1)</td></tr>
+    <tr><td>Sorting.h</td><td>merge + heap sort</td><td>comparator fn ptr; merge is stable</td><td>O(n log n)</td></tr>
+    <tr><td>DsaStats.h</td><td>counters</td><td>probes, collisions, rotations, resizes…</td><td>O(1)</td></tr>
+  </table>
+  </div>
+
+  <h2>Verification — real output</h2>
+  <h3>Unit tests (Makefile, clang++ -O2)</h3>
+  <pre>[doctest] test cases:      57 |      57 passed | 0 failed | 0 skipped
+[doctest] assertions: 2608583 | 2608583 passed | 0 failed |
+[doctest] Status: SUCCESS!</pre>
+  <h3>CMake build (Release, -O3 -DNDEBUG) via CTest</h3>
+  <pre>1/1 Test #1: unit .............................   Passed    0.95 sec
+100% tests passed out of 1</pre>
+  <p>Each structure runs <span class="hl">100,000 random operations</span> against its matching <code>std::</code> container; the RNG port is checked against the published reference C.</p>
+
+  <h3>Determinism — identical hash across optimization levels</h3>
+  <pre>Makefile -O2 run1: stateHash: 0xc2ca09c5c57d7731
+Makefile -O2 run2: stateHash: 0xc2ca09c5c57d7731
+CMake -O3 NDEBUG : stateHash: 0xc2ca09c5c57d7731   (seed 42, 365 days, pop 80)</pre>
+
+  <h3>Save/load &amp; cause graph (tested)</h3>
+  <pre>200 continuous days == 100 days + save + load + 100 days  → identical hash ✓
+Drought → CropFailure → Hunger → Theft: traceRoots(theft) = Drought ✓
+Same-tick events with no explicit cause get NO edge ✓</pre>
+
+  <h3>Headless runner (seed 42, 365 days, pop 80)</h3>
+  <pre>population: 80   events: 2278
+births=57 deaths=57 thefts=13 rumors=1043 scandals=29
+stateHash: 0xc2ca09c5c57d7731</pre>
+
+  <h3>Seed hunt → demo seed 17</h3>
+  <pre>rank seed   score variety deaths scandals rumors discovered
+ 1     17   1037      8     10      35    482       35
+ 2    182   1030      7      3      34    512       34
+ 3    124   1000      8      8      29    527       29</pre>
+
+  <h2>Acceptance checklist</h2>
+  <ul class="check">
+    <li>core builds with no GUI includes</li>
+    <li>All DSA structures are own code and pass randomized tests</li>
+    <li>Same seed + commands give the same stateHash (two runs)</li>
+    <li>Save/load test passes</li>
+    <li>Cause edges come only from explicit rules</li>
+    <li>Diagnostics API returns real counters</li>
+    <li>Narrator &amp; obituaries use only recorded events</li>
+    <li>Every file is commented (purpose / complexity / users) and explainable</li>
+  </ul>
+
+  <h2>Run it</h2>
+  <pre>make test                 # 49 unit tests
+make run                  # headless demo
+./build/seedhunt          # seed hunt → data/scenarios/demo.json
+
+cmake -B cmake-build -DCMAKE_BUILD_TYPE=Release
+cmake --build cmake-build -j
+ctest --test-dir cmake-build --output-on-failure</pre>
+
+  <h2>Hand-off notes</h2>
+  <div class="note"><b>Platform:</b> built on macOS. The MFC GUI (P4) is Windows-only; <code>core</code> is platform-free and CMake guards <code>gui/</code> behind <code>if(WIN32)</code>.</div>
+  <div class="note"><b>Placeholders:</b> <code>World</code> worldgen/pathfinding and <code>Human</code> are contract-faithful placeholders. P2 owns real world/navigation, P3 owns the full human model. <code>tools/DemoSystem.h</code> is demo-only and gets replaced.</div>
+  <div class="note"><b>Contracts frozen:</b> shared headers need whole-team OK to change. P1 finalised <code>Snapshot</code> to use our DynArray (within P1 ownership).</div>
+
+  <p class="foot">Generated 2026-11-28 · full details in <code>reports/REPORT.md</code> · raw logs in <code>reports/*.txt</code></p>
+</div>

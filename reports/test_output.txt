@@ -1,0 +1,70 @@
+### doctest summary (Makefile build, clang++ -O2) — after P1 fixes
+[doctest] doctest version is "2.4.12"
+[doctest] run with "--help" for options
+===============================================================================
+[doctest] test cases:      57 |      57 passed | 0 failed | 0 skipped
+[doctest] assertions: 2608583 | 2608583 passed | 0 failed |
+[doctest] Status: SUCCESS!
+
+### test case list
+[doctest] listing all test case names
+===============================================================================
+AvlTree matches std::map over 100000 random ops
+AvlTree reverse in-order is descending
+AvlTree stays balanced under ascending inserts (worst case for plain BST)
+DynArray balances construction and destruction
+DynArray handles non-trivial std::string elements
+DynArray matches std::vector over 100000 random ops
+DynArray doubling capacity and swapRemove
+Gini is 0 for perfectly equal wealth
+Gini approaches 1 when one person owns everything
+Gini of sorted helper matches known values
+Grammar expands symbols and applies modifiers
+Grammar a/an modifier picks by vowel
+Grammar plural modifier
+Grammar uses vars before rules and leaves unknown symbols empty
+Grammar expansion is deterministic for a fixed narration seed
+Graph random node/edge ops match a model (incl. removeNode)
+Graph add/remove/has edge matches a set model over 100000 ops
+Graph removeNode clears incident edges on both ends
+Graph reverse adjacency enables root tracing
+HashTable matches std::unordered_map over 100000 random ops
+HashTable iteration order is identical across two runs
+HashTable grows past load factor 0.75
+traceRoots follows explicit causes back to the root
+no cause edge is inferred from timing alone
+eventsFor indexes events per human
+multiple roots are returned in ascending order
+birthHuman allocates from the single ID authority
+Human IDs stay unique across births AND God-Mode spawns
+LinkedList matches std::list over 100000 random ops
+LinkedList O(1) remove by handle keeps order
+MinHeap matches std::priority_queue over 100000 random ops
+MinHeap breaks ties by seq (FIFO for equal keys)
+Narrator narrates a theft using actor names from recorded data
+Narrator does NOT consume the simulation RNG streams
+Obituary is built only from recorded events
+Save/load with commands: 150 continuous == 75 + save + load + 75
+200 continuous days == 100 days + save + load + 100 days
+JSON round-trip preserves the hash immediately
+File save/load round-trip preserves the hash
+Schema mismatch is rejected
+Queue matches std::queue over 100000 random ops
+Queue wraps around the circular buffer correctly
+Rng matches reference C outputs for seed 1 (1000 draws)
+Rng matches reference for several seeds
+Rng is reproducible and streams are independent
+Rng range and chance stay in bounds
+HashTable shrinks after bulk erase
+Rng range and chance guard bad inputs without crashing
+Two runs with the same seed give the same stateHash
+Different seeds give different stateHash
+Same seed + same command list give the same stateHash
+A God-Mode command changes the state (GUI pushes, never mutates)
+Scheduler fires due events in (tick,seq) order
+mergeSort matches std::sort on 100000 random ints
+heapSort matches std::sort on 100000 random ints
+mergeSort is stable (equal keys keep original order)
+sorting empty and single-element arrays is safe
+===============================================================================
+[doctest] unskipped test cases passing the current filters: 57

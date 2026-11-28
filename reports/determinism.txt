@@ -1,0 +1,4 @@
+Determinism evidence (after P1 fixes)
+Makefile -O2 run1: stateHash: 0xc2ca09c5c57d7731
+Makefile -O2 run2: stateHash: 0xc2ca09c5c57d7731
+CMake -O3 NDEBUG : stateHash: 0xc2ca09c5c57d7731

@@ -1,0 +1,20 @@
+# Build artifacts
+build/
+cmake-build/
+cmake-build-*/
+out/
+*.o
+*.obj
+*.d
+*.exe
+*.pdb
+*.ilk
+
+# OS / editor
+.DS_Store
+.vs/
+.vscode/
+*.user
+
+# Generated demo output (kept: data/scenarios/demo.json is committed deliberately)
+reports/*.log

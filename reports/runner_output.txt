@@ -1,0 +1,15 @@
+seed=42 days=365 initialPop=80
+population: 80
+events: 2278
+births=57 deaths=57 thefts=13 rumors=1043 scandals=29
+stateHash: 0xc2ca09c5c57d7731
+
+-- recent narration --
+Opal fell ill (2). The body has opened negotiations.
+Freya told Quinn about Mira. Accuracy: 15%.
+Juno informed Hana about Cyrus. Verification: pending forever.
+Day 363: a rumour about Magnus reached Bram via Edda. Truth: optional.
+Tessa caught something. Health: 48 and bargaining.
+
+-- obituary --
+Liam (0-0), citizen. Survived by 0 children and 0 grudges. Cause of death: sickness. Best known for: surviving. Rumored last words: "Ulric informed Liam about Bo. Verification: pending forever." (unverified).
