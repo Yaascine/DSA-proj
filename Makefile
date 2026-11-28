@@ -10,8 +10,8 @@
 CXX      := clang++
 CC       := clang
 INCLUDES := -I. -Ithird_party/doctest -Ithird_party
-CXXFLAGS := -std=c++20 -O2 -Wall -Wextra $(INCLUDES)
-CFLAGS   := -std=c11 -O2 -Wall $(INCLUDES)
+CXXFLAGS := -std=c++20 -O2 -Wall -Wextra -MMD -MP $(INCLUDES)
+CFLAGS   := -std=c11 -O2 -Wall -MMD -MP $(INCLUDES)
 LDFLAGS  :=
 
 BUILD    := build
@@ -20,6 +20,7 @@ CORE_OBJ := $(patsubst %.cpp,$(BUILD)/%.o,$(CORE_SRC))
 TEST_SRC := $(wildcard tests/unit/*.cpp)
 TEST_OBJ := $(patsubst %.cpp,$(BUILD)/%.o,$(TEST_SRC))
 REF_OBJ  := $(BUILD)/tests/reference/prng_ref.o
+ALL_OBJ  := $(CORE_OBJ) $(TEST_OBJ) $(REF_OBJ) $(BUILD)/core/sim/HeadlessMain.o $(BUILD)/tools/SeedHunt.o
 
 .PHONY: all test run clean
 all: $(BUILD)/tge_tests $(BUILD)/runner $(BUILD)/seedhunt
@@ -49,3 +50,6 @@ run: $(BUILD)/runner
 
 clean:
 	rm -rf $(BUILD)
+
+# Auto-generated header dependencies (so editing a .h rebuilds dependents).
+-include $(ALL_OBJ:.o=.d)

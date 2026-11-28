@@ -1,9 +1,11 @@
 # Build artifacts
 build/
+cmake-build/
 cmake-build-*/
 out/
 *.o
 *.obj
+*.d
 *.exe
 *.pdb
 *.ilk

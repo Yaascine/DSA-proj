@@ -1,0 +1,9 @@
+Top 5 seeds (days=180 pop=80):
+rank seed   score variety deaths scandals rumors discovered
+ 1    144   1097      8      5      35    552       35
+ 2    182   1030      7      3      34    512       34
+ 3    124   1024      7      4      32    530       32
+ 4     96   1012      8     12      26    570       26
+ 5     32    991      8      8      31    492       31
+
+Wrote data/scenarios/demo.json (seed 144)

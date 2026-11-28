@@ -1,0 +1,15 @@
+seed=42 days=365 initialPop=80
+population: 88
+events: 2255
+births=57 deaths=49 thefts=11 rumors=1073 scandals=28
+stateHash: 0x6b30f08a55667c80
+
+-- recent narration --
+Hana told Tessa about Bo. Accuracy: 12%.
+Ulric told Ada about Greta. Accuracy: 63%.
+Day 364: Zev is sick, severity 36. Rest: prescribed. Ignored: likely.
+Day 364: a rumour about Greta reached Kessa via Xan. Truth: optional.
+Day 364: a rumour about Greta reached Yara via Hana. Truth: optional.
+
+-- obituary --
+Xan (0-0), citizen. Survived by 0 children and 0 grudges. Cause of death: sickness. Best known for: Embezzle. Rumored last words: "Xan informed Zev about Magnus. Verification: pending forever." (unverified).
