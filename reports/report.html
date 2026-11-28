@@ -44,8 +44,8 @@
     <h1>The God Experiment — P1 Build Report</h1>
     <p class="sub">Engine · Hand-written DSA library · History &amp; cause graph · Narrator · Persistence</p>
     <div class="badges">
-      <span class="badge ok">49 / 49 tests pass</span>
-      <span class="badge ok">2,558,326 assertions</span>
+      <span class="badge ok">57 / 57 tests pass</span>
+      <span class="badge ok">2,608,583 assertions</span>
       <span class="badge">Makefile ✓</span>
       <span class="badge">CMake ✓</span>
       <span class="badge">Deterministic ✓</span>
@@ -54,9 +54,9 @@
     <div class="grid stats">
       <div class="stat"><div class="n">36</div><div class="l">core files (~2,759 lines)</div></div>
       <div class="stat"><div class="n">9</div><div class="l">hand-written DSA structures</div></div>
-      <div class="stat"><div class="n">16</div><div class="l">unit-test suites</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">unit-test suites</div></div>
       <div class="stat"><div class="n">25</div><div class="l">narrated event types</div></div>
-      <div class="stat"><div class="n">70</div><div class="l">files committed</div></div>
+      <div class="stat"><div class="n">79</div><div class="l">files committed</div></div>
     </div>
   </div>
 
@@ -69,6 +69,15 @@
     <div class="card"><h3>core/persistence</h3><p>nlohmann/json save/load with <code>schemaVersion</code>; preserves RNG states, tiles, humans, scheduler, history.</p></div>
     <div class="card"><h3>tools &amp; repo</h3><p>SeedHunt (picks demo seed), DemoSystem (demo-only), Makefile + CMake, AGENTS.md, README, git history.</p></div>
   </div>
+
+  <h2>Phase 0 hardening (self-review fixes)</h2>
+  <div class="grid cards">
+    <div class="card"><h3>🐛 Duplicate-ID bug fixed</h3><p>New humans now come from one authority (<code>birthHuman</code>/<code>nextHumanId_</code>); births + God-Mode spawns can't collide. Proven by <code>IdUniquenessTest</code>.</p></div>
+    <div class="card"><h3>DynArray lifetime</h3><p>Placement-new + explicit destructors: complex items (names) release resources immediately; ctor/dtor counts balance.</p></div>
+    <div class="card"><h3>HashTable shrink + RNG guards</h3><p>Buckets shrink below 0.25 load; <code>range</code>/<code>chance</code> handle bad inputs safely.</p></div>
+    <div class="card"><h3>More tests + CI</h3><p>Random graph ops, save/load with commands, GitHub Actions CI, team Git guide, MSVC portability note.</p></div>
+  </div>
+  <div class="note">Scope this round: <b>P1 fixes only</b>. P2 (world), P3 (people), P4 (MFC GUI) remain for teammates; MFC-only, no Mac viewer. The demo fingerprint shifted (<code>0xc2ca…</code>) because the birth fix reordered two RNG draws — determinism itself is unchanged.</div>
 
   <h2>The graded DSA library</h2>
   <div class="scroll">
@@ -88,8 +97,8 @@
 
   <h2>Verification — real output</h2>
   <h3>Unit tests (Makefile, clang++ -O2)</h3>
-  <pre>[doctest] test cases:      49 |      49 passed | 0 failed | 0 skipped
-[doctest] assertions: 2558326 | 2558326 passed | 0 failed |
+  <pre>[doctest] test cases:      57 |      57 passed | 0 failed | 0 skipped
+[doctest] assertions: 2608583 | 2608583 passed | 0 failed |
 [doctest] Status: SUCCESS!</pre>
   <h3>CMake build (Release, -O3 -DNDEBUG) via CTest</h3>
   <pre>1/1 Test #1: unit .............................   Passed    0.95 sec
@@ -97,9 +106,9 @@
   <p>Each structure runs <span class="hl">100,000 random operations</span> against its matching <code>std::</code> container; the RNG port is checked against the published reference C.</p>
 
   <h3>Determinism — identical hash across optimization levels</h3>
-  <pre>Makefile -O2 run1: stateHash: 0x6b30f08a55667c80
-Makefile -O2 run2: stateHash: 0x6b30f08a55667c80
-CMake -O3 NDEBUG : stateHash: 0x6b30f08a55667c80   (seed 42, 365 days, pop 80)</pre>
+  <pre>Makefile -O2 run1: stateHash: 0xc2ca09c5c57d7731
+Makefile -O2 run2: stateHash: 0xc2ca09c5c57d7731
+CMake -O3 NDEBUG : stateHash: 0xc2ca09c5c57d7731   (seed 42, 365 days, pop 80)</pre>
 
   <h3>Save/load &amp; cause graph (tested)</h3>
   <pre>200 continuous days == 100 days + save + load + 100 days  → identical hash ✓
@@ -107,15 +116,15 @@ Drought → CropFailure → Hunger → Theft: traceRoots(theft) = Drought ✓
 Same-tick events with no explicit cause get NO edge ✓</pre>
 
   <h3>Headless runner (seed 42, 365 days, pop 80)</h3>
-  <pre>population: 88   events: 2255
-births=57 deaths=49 thefts=11 rumors=1073 scandals=28
-stateHash: 0x6b30f08a55667c80</pre>
+  <pre>population: 80   events: 2278
+births=57 deaths=57 thefts=13 rumors=1043 scandals=29
+stateHash: 0xc2ca09c5c57d7731</pre>
 
-  <h3>Seed hunt → demo seed 144</h3>
+  <h3>Seed hunt → demo seed 17</h3>
   <pre>rank seed   score variety deaths scandals rumors discovered
- 1    144   1097      8      5      35    552       35
+ 1     17   1037      8     10      35    482       35
  2    182   1030      7      3      34    512       34
- 3    124   1024      7      4      32    530       32</pre>
+ 3    124   1000      8      8      29    527       29</pre>
 
   <h2>Acceptance checklist</h2>
   <ul class="check">

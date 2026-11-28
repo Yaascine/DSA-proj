@@ -51,6 +51,9 @@ public:
 
     void addSystem(ISystem* s) { systems_.push_back(s); }
     void pushCommand(const Command& c) { commands_.push(c); }
+    // Single authority for newborn humans (systems call this via SimContext::sim).
+    // Guarantees unique IDs from nextHumanId_; records a Birth event.
+    HumanId birthHuman(TileCoord pos);
     void step();
     void run(int n) { for (int i = 0; i < n; ++i) step(); }
 

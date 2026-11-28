@@ -1,0 +1,32 @@
+# CI — runs the full test suite on every push and pull request.
+# Protects determinism and the frozen contracts: a PR cannot merge red.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain (clang + cmake)
+        run: sudo apt-get update && sudo apt-get install -y clang cmake
+
+      - name: Makefile build + unit tests
+        run: make test
+
+      - name: CMake build + CTest
+        run: |
+          cmake -B cmake-build -DCMAKE_BUILD_TYPE=Release
+          cmake --build cmake-build -j
+          ctest --test-dir cmake-build --output-on-failure
+
+      - name: Determinism smoke check (same seed => same hash)
+        run: |
+          h1=$(./build/runner --seed 42 --days 200 --pop 80 | grep stateHash)
+          h2=$(./build/runner --seed 42 --days 200 --pop 80 | grep stateHash)
+          echo "$h1"; echo "$h2"
+          test "$h1" = "$h2"

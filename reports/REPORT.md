@@ -3,8 +3,43 @@
 **Role:** P1 (engine, DSA library, history, narrator, persistence)
 **Date:** 2026-11-28
 **Machine:** macOS, Apple clang 21.0.0, CMake 4.5.1, GNU Make 3.81
-**Status:** ✅ Complete and verified. 49/49 test cases pass (2,558,326 assertions). Both
-Makefile and CMake builds are green. Determinism confirmed across optimization levels.
+**Status:** ✅ Complete and verified, then hardened (Phase 0 fixes below).
+**57/57 test cases pass (2,608,583 assertions).** Both Makefile and CMake builds green.
+Determinism confirmed across optimization levels.
+
+---
+
+## 0. Phase 0 hardening update (2026-11-28, after the initial build)
+
+A self-review found real flaws; these were fixed and proven with new regression tests.
+**This section supersedes the older figures in §§4–5 (which described the first build).**
+
+| Fix | What changed | Proof |
+|---|---|---|
+| **Duplicate-ID bug** | New humans now come from ONE authority (`Simulation::birthHuman` / `nextHumanId_`). The demo no longer assigns IDs from `humans.size()`, so births + God-Mode spawns can't collide. | `IdUniquenessTest` (fails on the old code) |
+| **DynArray lifetime** | Rewrote with raw storage + placement-new + explicit destructors, so non-trivial elements (e.g. names) release resources immediately and ctor/dtor counts balance. | `DynArrayLifetimeTest` |
+| **HashTable shrink** | Buckets halve when load drops below 0.25 (min 8), giving memory back after bulk erases. | `RobustnessTest` |
+| **RNG guards** | `range` handles a reversed range safely; `chance` clamps to 0..100 (RNG consumption unchanged). | `RobustnessTest` |
+| **Test gaps filled** | Added random graph node/edge ops, and save/load *with* commands. | `GraphRandomTest`, `PersistenceCommandsTest` |
+| **CI + team workflow** | Added `.github/workflows/ci.yml` (tests + determinism smoke check on every push/PR), `docs/GIT_TEAM_GUIDE.md`, `docs/PORTABILITY.md`. | — |
+
+**Updated verification:**
+```
+[doctest] test cases:      57 |      57 passed | 0 failed | 0 skipped
+[doctest] assertions: 2608583 | 2608583 passed | 0 failed |
+[doctest] Status: SUCCESS!
+```
+- Determinism (seed 42, 365 days): Makefile `-O2` run1 = run2 = CMake `-O3 -DNDEBUG`
+  = **`0xc2ca09c5c57d7731`**.
+- Note: this fingerprint differs from the first build (`0x6b30f08a55667c80`) because the
+  birth fix changed the order of two RNG draws. **Determinism is unaffected** — the same
+  seed still reproduces exactly; only the demo's specific sequence shifted.
+- Refreshed seed hunt → demo seed **17** (`data/scenarios/demo.json`).
+- `core` confirmed free of `<windows.h>`, MFC, `<unistd.h>`, `__attribute__`, `M_PI`
+  (MSVC-ready by inspection; actual MSVC compile is P4's early-Windows task).
+
+**Scope note:** per the team decision, this round was **P1 fixes only** — P2 (world),
+P3 (people), P4 (MFC GUI) remain for teammates; no Mac GUI fallback (MFC-only).
 
 ---
 

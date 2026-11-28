@@ -122,6 +122,10 @@ public:
                 freeHead_ = i;
                 --live_;
                 if (st_) ++st_->erases;
+                // Shrink when load drops below 0.25 (never below 8 buckets) to give
+                // memory back after bulk erases.
+                if (buckets_.size() > 8 && live_ * 4 < buckets_.size())
+                    rehash(buckets_.size() / 2);
                 return true;
             }
             if (st_) ++st_->collisions;

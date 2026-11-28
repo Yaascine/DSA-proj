@@ -56,6 +56,20 @@ HumanId Simulation::spawnHuman(TileCoord pos, bool playerCaused) {
     return h.id;
 }
 
+HumanId Simulation::birthHuman(TileCoord pos) {
+    // Newborn: age 0, default stats. ID comes from the SAME authority as spawnHuman,
+    // so births and God-Mode spawns can never collide.
+    Human h;
+    h.id = nextHumanId_++;
+    h.name = randomName(rngPop_);
+    h.pos = pos;
+    h.ageDays = 0;
+    humans_.push_back(std::move(h));
+    history_.record(EventType::Birth, tick_, {h.id}, pos, 0, {}, EF_VERIFIED);
+    ++metrics_.births;
+    return h.id;
+}
+
 void Simulation::applyCommands() {
     while (!commands_.empty()) applyOne(commands_.pop());
 }
@@ -128,6 +142,7 @@ void Simulation::step() {
 
     SimContext ctx;                        // 3) systems in fixed order
     ctx.tick = tick_;
+    ctx.sim = this;
     ctx.world = &rngWorld_; ctx.population = &rngPop_;
     ctx.event = &rngEvent_; ctx.narration = &rngNarr_;
     ctx.worldObj = &world_; ctx.humans = &humans_;

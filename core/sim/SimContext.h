@@ -18,8 +18,11 @@
 
 namespace tge {
 
+class Simulation; // forward declaration (systems may call the engine's ID authority)
+
 struct SimContext {
     Tick tick = 0;
+    Simulation* sim = nullptr; // engine pointer: use sim->birthHuman() for new humans
     Rng* world = nullptr;
     Rng* population = nullptr;
     Rng* event = nullptr;
@@ -31,5 +34,8 @@ struct SimContext {
     const DynArray<HeapItem>* dueEvents = nullptr; // scheduled items fired this tick
     Metrics* metrics = nullptr;
 };
+
+// NOTE: new humans must ALWAYS be created through Simulation::birthHuman()/spawn so
+// IDs come from one authority (nextHumanId_). Never assign IDs from humans.size().
 
 } // namespace tge

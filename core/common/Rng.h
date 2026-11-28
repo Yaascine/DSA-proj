@@ -44,8 +44,17 @@ struct Rng {
 
     // Inclusive integer range [lo, hi]. Modulo bias is acceptable for a game sim
     // and keeps the port byte-identical to the simple reference usage.
-    int range(int lo, int hi) { return lo + (int)(next() % (uint64_t)(hi - lo + 1)); }
-    bool chance(int percent) { return range(1, 100) <= percent; }
+    // Guard: a reversed range returns lo (no draw) instead of dividing by zero.
+    int range(int lo, int hi) {
+        if (hi < lo) return lo;
+        return lo + (int)(next() % (uint64_t)(hi - lo + 1));
+    }
+    // Clamped to 0..100. Still draws from the stream so RNG consumption is unchanged.
+    bool chance(int percent) {
+        if (percent < 0) percent = 0;
+        if (percent > 100) percent = 100;
+        return range(1, 100) <= percent;
+    }
 
     bool operator==(const Rng& o) const {
         return s[0] == o.s[0] && s[1] == o.s[1] && s[2] == o.s[2] && s[3] == o.s[3];

@@ -108,14 +108,9 @@ public:
             int alive = 0;
             for (size_t i = 0; i < humans.size(); ++i) if (humans[i].alive) ++alive;
             if (alive > 0 && alive < 200) {
-                Human child;
-                child.id = (HumanId)humans.size();
-                child.name = Simulation::randomName(pop);
-                child.ageDays = 0;
-                child.pos = humans[pop.range(0, (int)humans.size() - 1)].pos;
-                humans.push_back(std::move(child));
-                h.record(EventType::Birth, ctx.tick, {child.id}, child.pos, 0, {}, EF_VERIFIED);
-                ++m.births;
+                // New humans go through the engine's single ID authority (no collisions).
+                TileCoord pos = humans[pop.range(0, (int)humans.size() - 1)].pos;
+                ctx.sim->birthHuman(pos);
             }
         }
     }
