@@ -26,6 +26,7 @@ jobs:
 
       - name: Determinism smoke check (same seed => same hash)
         run: |
+          make build/runner
           h1=$(./build/runner --seed 42 --days 200 --pop 80 | grep stateHash)
           h2=$(./build/runner --seed 42 --days 200 --pop 80 | grep stateHash)
           echo "$h1"; echo "$h2"
