@@ -14,7 +14,7 @@ Last research check: 2026-11-28 (web search). Pin library versions yourself; see
 
 ```
 TheGodExperiment/
-  AGENTS.md  README.md  CMakeLists.txt  TheGodExperiment.sln
+  CONTRIBUTING.md  README.md  CMakeLists.txt  TheGodExperiment.sln
   core/
     common/ dsa/ sim/ history/ persistence/        <- P1
     world/ environment/ navigation/ experiments/   <- P2
@@ -73,7 +73,7 @@ struct ISystem { virtual void onTick(SimContext&) = 0; virtual ~ISystem() {} };
 ```
 
 - Tick order (fixed, P1 enforces): 1) apply commands, 2) pop due scheduled events from the heap, 3) environment (P2), 4) humans decide and act in ascending ID order (P3), 5) resolve interactions (theft, rumors, births), 6) record events and metrics, 7) publish Snapshot.
-- Rules for working with Claude Code: contracts first, small tasks, every task ends with a passing test and its REAL pasted output, plain commented C++ with one concept per file, one person merges, never ask an agent for a "whole phase".
+- Working rules: contracts first, small tasks, every task ends with a passing test and its REAL pasted output, plain commented C++ with one concept per file, one person merges, keep each task to a single reviewable change.
 
 ---
 
@@ -86,7 +86,7 @@ struct ISystem { virtual void onTick(SimContext&) = 0; virtual ~ISystem() {} };
 | `core/sim/` | Simulation loop, command queue, scheduler, Snapshot, state hash, headless runner |
 | `core/history/` | Event log, cause graph, narrator, obituaries |
 | `core/persistence/` | Save/load JSON, determinism tests |
-| repo root | CMake, doctest setup, `AGENTS.md`, merging |
+| repo root | CMake, doctest setup, `CONTRIBUTING.md`, merging |
 
 ---
 
@@ -258,7 +258,7 @@ Walk the AVL in ascending wealth order into an array `x[0..n-1]`, then
 
 ---
 
-## 5. Claude Code task prompts (copy and edit)
+## 5. Task prompts (copy and edit)
 
 1. "Implement `core/dsa/MinHeap.h` by hand (no STL containers, no `std::priority_queue`): push, pop, peek, size, empty, ordered by `(key, seq)`. Count comparisons and swaps in `DsaStats`. Comment the file with purpose and big-O. Write `tests/unit/MinHeapTest.cpp` with doctest comparing 100,000 random operations to `std::priority_queue`. Run the tests and paste the real output."
 2. "Implement `core/common/Rng.h` (xoshiro256** seeded by splitmix64) and test it against the reference C code outputs for seed 1."
@@ -288,7 +288,7 @@ Walk the AVL in ascending wealth order into an array `x[0..n-1]`, then
 
 ## 7. Your schedule
 
-- **Days 1-2:** repo, solution, CMake, doctest, `AGENTS.md`. Freeze shared headers with the team. `Rng`, `DynArray`, `HashTable` with tests.
+- **Days 1-2:** repo, solution, CMake, doctest, `CONTRIBUTING.md`. Freeze shared headers with the team. `Rng`, `DynArray`, `HashTable` with tests.
 - **Day 3:** `MinHeap`, `Queue`, `LinkedList`.
 - **Day 4:** `AvlTree`, `Graph`, `Sorting`, `DsaStats`.
 - **Day 5:** simulation loop, scheduler, commands, `stateHash`, headless runner.
@@ -325,6 +325,6 @@ Walk the AVL in ascending wealth order into an array `x[0..n-1]`, then
 ## 10. Pitfalls
 
 - A missing tiebreaker makes hashes differ for no visible reason. Add one everywhere.
-- Do not let agents "improve" the contracts quietly. Contract changes need the whole team.
-- Agents love over-engineering. If a file uses clever templates you cannot explain, reject it.
+- Do not let contributors "improve" the contracts quietly. Contract changes need the whole team.
+- Avoid over-engineering. If a file uses clever templates you cannot explain, reject it.
 - Run every test yourself and look at the output. Never trust "tests pass" without output.

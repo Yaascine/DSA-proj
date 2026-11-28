@@ -133,7 +133,7 @@ as the rules allow. Everything else reuses `DynArray` node pools — no stray al
 ### 2.7 Repo root & tools
 - **Makefile** (primary verified build, with `-MMD -MP` header dependency tracking),
   **CMakeLists.txt** (cross-platform; MFC GUI guarded behind `if(WIN32)`),
-  **AGENTS.md**, **README.md**, **.gitignore**.
+  **CONTRIBUTING.md**, **README.md**, **.gitignore**.
 - **tools/SeedHunt.cpp** — scores seeds 1..200 (variety, deaths, scandals, rumor reach,
   corruption discovered), prints top 5, writes `data/scenarios/demo.json`.
 

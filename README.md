@@ -57,7 +57,7 @@ The MFC GUI is added only on Windows (`if(WIN32)` in CMake). See `docs/PORTABILI
 ## Determinism rules (do not break)
 Single thread; own RNG only (`core/common/Rng.h`, four streams); no `unordered_map`
 iteration in sim logic; tiebreakers everywhere; integer sim values; entities reference by
-ID. Full rules in **`AGENTS.md`**.
+ID. Full rules in **`CONTRIBUTING.md`**.
 
 ## Folder layout
 ```

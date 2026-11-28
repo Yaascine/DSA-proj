@@ -1,4 +1,4 @@
-# AGENTS.md — rules for AI agents working on The God Experiment
+# CONTRIBUTING.md — team working rules for The God Experiment
 
 These rules are mandatory. They protect determinism, the graded DSA code, and the
 team's shared contracts. Read the relevant `P*_...md` guide before editing.
@@ -8,7 +8,7 @@ team's shared contracts. Read the relevant `P*_...md` guide before editing.
    `core/humans/Human.h`, `core/history/History.h`, `core/sim/Command.h`,
    `core/sim/Snapshot.h`, `core/sim/ISystem.h`) are FROZEN. Do not change a signature
    without the whole team's OK. Never "improve" a contract quietly.
-2. **Small tasks.** One concept per file. Never ask an agent for a "whole phase".
+2. **Small tasks.** One concept per file. Keep each task to a single, reviewable change.
 3. **Every task ends with a passing test and its REAL pasted output.** Run the test
    yourself; never trust "tests pass" without seeing the output.
 4. **Plain, commented C++.** Header comment on every file: purpose, complexity, who
